@@ -228,6 +228,9 @@ public class NativeLinkMojo
         config.setStartOptions( removeEmptyOptions( this.linkerStartOptions ) );
         config.setMiddleOptions( removeEmptyOptions( this.linkerMiddleOptions ) );
         config.setEndOptions( removeEmptyOptions( this.linkerEndOptions ) );
+        if(!linkerOutputDirectory.exists()) { // create output dir if it does not exist. 
+            linkerOutputDirectory.mkdirs();
+        }
         config.setOutputDirectory( this.linkerOutputDirectory );
         config.setOutputFileName( this.linkerOutputName );
         config.setOutputFileExtension( this.project.getArtifact().getArtifactHandler().getExtension() );
