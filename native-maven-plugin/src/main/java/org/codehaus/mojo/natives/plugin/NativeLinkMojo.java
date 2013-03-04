@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import org.apache.maven.artifact.Artifact;
@@ -228,12 +229,15 @@ public class NativeLinkMojo
         config.setStartOptions( removeEmptyOptions( this.linkerStartOptions ) );
         config.setMiddleOptions( removeEmptyOptions( this.linkerMiddleOptions ) );
         config.setEndOptions( removeEmptyOptions( this.linkerEndOptions ) );
-        if(!linkerOutputDirectory.exists()) { // create output dir if it does not exist. 
+        if(!linkerOutputDirectory.exists()) { // create output dir if it does not exist.
             linkerOutputDirectory.mkdirs();
         }
         config.setOutputDirectory( this.linkerOutputDirectory );
         config.setOutputFileName( this.linkerOutputName );
         config.setOutputFileExtension( this.project.getArtifact().getArtifactHandler().getExtension() );
+        if(config.getOutputFileExtension().equals("so") && System.getProperty( "os.name").toLowerCase( Locale.US ).replace( ' ', '-').startsWith( "mac-") ) {
+            config.setOutputFileExtension( "jnilib");
+        }
         config.setExternalLibDirectory( this.externalLibDirectory );
         config.setExternalLibFileNames( this.getLibFileNames() );
         config.setEnvFactory( this.getEnvFactory() );
