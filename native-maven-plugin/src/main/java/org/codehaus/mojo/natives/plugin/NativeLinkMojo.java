@@ -235,7 +235,7 @@ public class NativeLinkMojo
         config.setOutputDirectory( this.linkerOutputDirectory );
         config.setOutputFileName( this.linkerOutputName );
         config.setOutputFileExtension( this.project.getArtifact().getArtifactHandler().getExtension() );
-        if(config.getOutputFileExtension().equals("so") && System.getProperty( "os.name").toLowerCase( Locale.US ).replace( ' ', '-').startsWith( "mac") ) {
+        if("so".equals(config.getOutputFileExtension()) && System.getProperty( "os.name").toLowerCase( Locale.US ).replace( ' ', '-').startsWith( "mac") ) {
             config.setOutputFileExtension( "jnilib");
         }
         config.setExternalLibDirectory( this.externalLibDirectory );
